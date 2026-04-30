@@ -48,13 +48,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                 const encodedText = encodeURIComponent(text);
                 const apiUrl = `/api/image/iqc?text=${encodedText}`;
 
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: { 'accept': 'image/png' }
-                });
+                 const response = await fetch(apiUrl);
 
-                if (response.ok) {
-                    const blob = await response.blob();
+                 if (response.ok) {
+                     const blob = await response.blob();
                     const imageUrl = URL.createObjectURL(blob);
 
                     let html = `<div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-5 border border-gray-200">`;
@@ -78,6 +75,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             }
         }
     
-        document.getElementById("actionBtn").addEventListener("click", null);
+        document.getElementById("actionBtn").addEventListener("click", generateImage);
       </script>
 </BaseLayout>

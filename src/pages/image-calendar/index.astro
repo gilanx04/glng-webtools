@@ -70,13 +70,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             try {
                 const apiUrl = `/api/image/calendar?month=${month}&year=${year}`;
 
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: { 'accept': 'image/png' }
-                });
+                 const response = await fetch(apiUrl);
 
-                if (response.ok) {
-                    const blob = await response.blob();
+                 if (response.ok) {
+                     const blob = await response.blob();
                     const imageUrl = URL.createObjectURL(blob);
 
                     let html = `<div class="bg-gradient-to-br from-gray-50 to-teal-50 rounded-xl p-5 border border-teal-100">`;
