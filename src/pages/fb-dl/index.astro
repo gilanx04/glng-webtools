@@ -26,10 +26,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101"/></svg>
                 </div>
             </div>
-            <button onclick="downloadVideo()"
-                class="w-full gradient-btn text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-blue-500/30">
-                Download Video
-            </button>
+             <button id="dlBtn"
+                 class="w-full gradient-btn text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-blue-500/30">
+                 Download Video
+             </button>
         </div>
 
         <div id="result" class="space-y-4"></div>
@@ -45,19 +45,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         async function downloadVideo() {
             const url = document.getElementById('fbUrl').value.trim();
             const resultDiv = document.getElementById('result');
-            const button = document.querySelector('button');
+            const button = document.getElementById('dlBtn');
 
             if (!url) {
-                resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">Masukkan URL Facebook terlebih dahulu</p></div>`;
+                resultDiv.innerHTML = '<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">Masukkan URL Facebook terlebih dahulu</p></div>';
                 return;
             }
 
-            resultDiv.innerHTML = `<div class="text-center py-6"><div class="inline-block animate-spin rounded-full h-10 w-10 border-b-3 border-blue-600"></div><p class="text-gray-600 mt-3 font-medium">Memproses...</p></div>`;
+            resultDiv.innerHTML = '<div class="text-center py-6"><div class="inline-block animate-spin rounded-full h-10 w-10 border-b-3 border-blue-600"></div><p class="text-gray-600 mt-3 font-medium">Memproses...</p></div>';
             button.disabled = true;
             button.textContent = 'Memproses...';
 
             try {
-                const apiUrl = `https://api.ryzumi.net/api/downloader/facebook?url=${encodeURIComponent(url)}`;
+                const apiUrl = 'https://api.ryzumi.net/api/downloader/facebook?url=' + encodeURIComponent(url);
                 const response = await fetch(apiUrl);
                 const data = await response.json();
 
@@ -66,43 +66,39 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                     let html = '';
 
                     if (cover || title) {
-                        html += `<div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl p-5 mb-4 border border-blue-100">`;
-                        if (cover) html += `<img src="${cover}" class="w-full rounded-lg mb-3 shadow-md">`;
-                        if (title) html += `<h3 class="font-bold text-gray-800 text-lg">${title}</h3>`;
-                        html += `</div>`;
+                        html += '<div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl p-5 mb-4 border border-blue-100">';
+                        if (cover) html += '<img src="' + cover + '" class="w-full rounded-lg mb-3 shadow-md">';
+                        if (title) html += '<h3 class="font-bold text-gray-800 text-lg">' + title + '</h3>';
+                        html += '</div>';
                     }
 
                     if (media && media.videos && media.videos.length > 0) {
-                        media.videos.forEach((video, i) => {
+                        media.videos.forEach(function(video, idx) {
                             const qualityLabel = video.quality || 'unknown';
                             const res = qualityMap[qualityLabel] || qualityLabel;
                             const bitrateMatch = video.url.match(/bitrate=(\d+)/);
-                            const bitrate = bitrateMatch ? Math.round(parseInt(bitrateMatch[1])/1000) + 'k' : '';
-                            const label = media.videos.length > 1 ? `${res} #${i+1}` : res;
+                            const bitrate = bitrateMatch ? Math.round(parseInt(bitrateMatch[1]) / 1000) + 'k' : '';
+                            const label = media.videos.length > 1 ? res + ' #' + (idx + 1) : res;
 
-                            html += `
-                                <a href="${video.url}" target="_blank" rel="noopener"
-                                    class="success-btn text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-green-500/30 text-center block">
-                                    Download ${label} (${video.extension || 'mp4'})${bitrate ? ' - ' + bitrate : ''}
-                                </a>
-                            `;
+                            html += '<a href="' + video.url + '" target="_blank" rel="noopener" class="success-btn text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-green-500/30 text-center block">Download ' + label + ' (' + (video.extension || 'mp4') + ')' + (bitrate ? ' - ' + bitrate : '') + '</a>';
                         });
                     } else {
-                        html += `<div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-xl"><p class="text-yellow-700 font-medium">Tidak ada video yang ditemukan</p></div>`;
+                        html += '<div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-xl"><p class="text-yellow-700 font-medium">Tidak ada video yang ditemukan</p></div>';
                     }
                     resultDiv.innerHTML = html;
                 } else {
                     const errorMsg = data.errors || data.message || 'Gagal memproses URL';
-                    resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">${errorMsg}</p></div>`;
+                    resultDiv.innerHTML = '<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">' + errorMsg + '</p></div>';
                 }
             } catch (error) {
-                resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">Terjadi kesalahan: ${error.message}</p></div>`;
+                resultDiv.innerHTML = '<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">Terjadi kesalahan: ' + error.message + '</p></div>';
             } finally {
                 button.disabled = false;
                 button.textContent = 'Download Video';
             }
         }
 
+        document.getElementById('dlBtn').addEventListener('click', downloadVideo);
         document.getElementById('fbUrl').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') downloadVideo();
         });

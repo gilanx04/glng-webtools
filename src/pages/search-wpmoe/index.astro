@@ -26,7 +26,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 </div>
             </div>
-            <button onclick="searchWallpaper()"
+            <button id="actionBtn"
                 class="w-full gradient-btn text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-purple-500/30">
                 Cari Wallpaper
             </button>
@@ -99,5 +99,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         document.getElementById('query').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') searchWallpaper();
         });
-    </script>
+    
+        document.getElementById("actionBtn").addEventListener("click", null);
+      </script>
 </BaseLayout>
