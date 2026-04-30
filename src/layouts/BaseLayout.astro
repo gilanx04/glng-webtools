@@ -7,9 +7,10 @@ const { title = "GLNG Tools" } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style is:global>
       body { font-family: 'Inter', sans-serif; }
       .mesh-bg {
         background-image:
@@ -21,6 +22,27 @@ const { title = "GLNG Tools" } = Astro.props;
         background: rgba(255,255,255,0.85);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
+      }
+      .gradient-btn {
+        background: linear-gradient(135deg, #1877F2, #0d5cb6);
+      }
+      .gradient-btn:hover {
+        background: linear-gradient(135deg, #0d5cb6, #1877F2);
+        transform: scale(1.02);
+      }
+      .success-btn {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+      }
+      .success-btn:hover {
+        background: linear-gradient(135deg, #16a34a, #22c55e);
+        transform: scale(1.02);
+      }
+      .animate-spin {
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
       }
     </style>
   </head>

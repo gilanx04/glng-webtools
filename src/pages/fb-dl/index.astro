@@ -2,41 +2,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="Facebook Downloader - Web Tools">
-  <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-
-        .mesh-bg {
-            background-image:
-                radial-gradient(at 20% 50%, rgba(24, 119, 242, 0.3) 0px, transparent 50%),
-                radial-gradient(at 80% 20%, rgba(66, 103, 178, 0.2) 0px, transparent 50%),
-                radial-gradient(at 40% 80%, rgba(118, 75, 162, 0.2) 0px, transparent 50%);
-        }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-
-        .gradient-btn {
-            background: linear-gradient(135deg, #1877F2, #0d5cb6);
-        }
-
-        .gradient-btn:hover {
-            background: linear-gradient(135deg, #0d5cb6, #1877F2);
-            transform: scale(1.02);
-        }
-
-        .success-btn {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-        }
-
-        .success-btn:hover {
-            background: linear-gradient(135deg, #16a34a, #22c55e);
-            transform: scale(1.02);
-        }
-    </style>
   <div class="glass rounded-3xl shadow-2xl p-8 max-w-2xl w-full border border-white/50">
         <div class="text-center mb-8">
             <a href="/" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors font-medium mb-6">
@@ -70,7 +35,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <div id="result" class="space-y-4"></div>
     </div>
 
-    <script>
+    <script is:inline>
         const qualityMap = {
             'hd': '720p',
             'sd': '360p',
