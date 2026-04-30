@@ -52,7 +52,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
             try {
                 const encodedUrl = encodeURIComponent(url);
-                const apiUrl = `https://corsproxy.io/?https%3A%2F%2Fapi.ryzumi.net%2Fapi%2Fdownloader%2Fttdl?url=${encodedUrl}`;
+                const apiUrl = `https://api.ryzumi.net/api/downloader/ttdl?url=
 
                 const response = await fetch(apiUrl, {
                     method: 'GET',

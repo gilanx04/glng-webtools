@@ -1,0 +1,6 @@
+{
+  "routes": [
+    { "src": "/api/.*", "methods": ["GET", "POST"] },
+    { "src": "/.*", "type": "static" }
+  ]
+}
