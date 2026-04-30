@@ -1,29 +1,24 @@
 export async function onRequest(context) {
   const { request } = context;
   const url = new URL(request.url);
-  
-  // Get target URL from query parameter
-  const targetUrl = url.searchParams.get('url');
-  if (!targetUrl) {
-    return new Response(JSON.stringify({ error: 'Missing url parameter' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' }
-    });
-  }
-  
+
+  // Proxy to api.ryzumi.net with same path + query
+  const apiUrl = `https://api.ryzumi.net${url.pathname}${url.search}`;
+
   try {
-    const apiUrl = `https://api.ryzumi.net${url.pathname.replace('/api', '')}?url=${encodeURIComponent(targetUrl)}`;
     const response = await fetch(apiUrl, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; Cloudflare-Worker)'
+        'User-Agent': 'Mozilla/5.0 (compatible; Cloudflare-Worker)',
+        'Accept': 'application/json'
       }
     });
-    
+
     const data = await response.json();
     return new Response(JSON.stringify(data), {
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
       }
     });
   } catch (error) {

@@ -52,7 +52,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
             try {
                 const encodedUrl = encodeURIComponent(url);
-                const apiUrl = `https://api.ryzumi.net/api/downloader/instagram?url=
+                const apiUrl = `/api/downloader/instagram?url=
 
                 const response = await fetch(apiUrl, {
                     method: 'GET',
