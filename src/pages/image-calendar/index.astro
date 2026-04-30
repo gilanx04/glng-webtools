@@ -68,7 +68,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             button.textContent = 'Generating...';
 
             try {
-                const apiUrl = `https://api.ryzumi.net/api/image/calendar?month=${month}&year=${year}`;
+                const apiUrl = `/api/image/calendar?month=${month}&year=${year}`;
 
                 const response = await fetch(apiUrl, {
                     method: 'GET',

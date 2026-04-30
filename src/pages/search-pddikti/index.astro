@@ -52,7 +52,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
             try {
                 const encodedQuery = encodeURIComponent(query);
-                const apiUrl = `https://api.ryzumi.net/api/search/mahasiswa?query=${encodedQuery}`;
+                const apiUrl = `/api/search/mahasiswa?query=${encodedQuery}`;
 
                 const response = await fetch(apiUrl, {
                     method: 'GET',
@@ -99,6 +99,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             if (e.key === 'Enter') searchMahasiswa();
         });
     
-        document.getElementById("actionBtn").addEventListener("click", null);
+        document.getElementById("actionBtn").addEventListener("click", searchMahasiswa);
       </script>
 </BaseLayout>

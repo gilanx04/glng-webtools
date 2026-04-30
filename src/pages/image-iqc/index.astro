@@ -46,7 +46,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
             try {
                 const encodedText = encodeURIComponent(text);
-                const apiUrl = `https://api.ryzumi.net/api/image/iqc?text=${encodedText}`;
+                const apiUrl = `/api/image/iqc?text=${encodedText}`;
 
                 const response = await fetch(apiUrl, {
                     method: 'GET',
