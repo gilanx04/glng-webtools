@@ -7,8 +7,24 @@ const { title = "GLNG Tools" } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+      body { font-family: 'Inter', sans-serif; }
+      .mesh-bg {
+        background-image:
+          radial-gradient(at 20% 50%, rgba(59,130,246,0.3) 0px, transparent 50%),
+          radial-gradient(at 80% 20%, rgba(99,102,241,0.2) 0px, transparent 50%),
+          radial-gradient(at 40% 80%, rgba(139,92,246,0.2) 0px, transparent 50%);
+      }
+      .glass {
+        background: rgba(255,255,255,0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+    </style>
   </head>
-  <body>
+  <body class="mesh-bg min-h-screen">
     <slot />
   </body>
 </html>
