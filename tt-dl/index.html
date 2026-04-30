@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Downloader - Web Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+
+        .mesh-bg {
+            background-image:
+                radial-gradient(at 20% 50%, rgba(0, 0, 0, 0.3) 0px, transparent 50%),
+                radial-gradient(at 80% 20%, rgba(37, 244, 238, 0.2) 0px, transparent 50%),
+                radial-gradient(at 40% 80%, rgba(254, 44, 108, 0.2) 0px, transparent 50%);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .gradient-btn {
+            background: linear-gradient(135deg, #010101, #25F4EE);
+        }
+
+        .gradient-btn:hover {
+            background: linear-gradient(135deg, #25F4EE, #010101);
+            transform: scale(1.02);
+        }
+
+        .success-btn {
+            background: linear-gradient(135deg, #374151, #6b7280);
+        }
+
+        .success-btn:hover {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="min-h-screen mesh-bg flex items-center justify-center p-5">
+    <div class="glass rounded-3xl shadow-2xl p-8 max-w-2xl w-full border border-white/50">
+        <div class="text-center mb-8">
+            <a href="/" class="inline-flex items-center gap-2 text-gray-600 hover:text-black transition-colors font-medium mb-6">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                Kembali
+            </a>
+            <div class="w-20 h-20 bg-gradient-to-br from-gray-900 to-cyan-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12.53.02C13.84 0 15.14.01 16.44.06c1.76.07 3.37.38 4.89 1.02 1.52.63 2.83 1.59 3.88 3.02 1.05 1.43 1.7 3.13 1.97 5.07.27 1.94.3 4.14.08 6.17-.23 2.03-.85 3.73-1.83 5.05-1.02 1.37-2.35 2.35-3.9 2.96-1.55.61-3.28.93-5.06 1.07-1.78.14-3.35.1-5.43-.08-2.2-.17-3.89-.49-5.4-1.13-1.52-.63-2.83-1.59-3.88-3.02C.53 17.22-.12 15.52.15 13.58c.27-1.94.3-4.14.08-6.17-.23-2.03.39-3.73 1.37-5.05C2.62 1.98 3.95 1 5.5.4 7.05-.2 8.78-.52 10.56-.66 11.35-.74 11.86-.77 12.53-.76v.02zM8.01 5.4c-.3 0-.6.12-.8.32-.2.2-.3.5-.3.8v12.16c0 .3.1.6.3.8.2.2.5.3.8.3s.6-.1.8-.3c.2-.2.3-.5.3-.8V6.52c0-.3-.1-.6-.3-.8-.2-.2-.5-.32-.8-.32zm7.98 3.97c-.5 0-1 .1-1.5.3-.5.2-1 .5-1.4 1-.4.5-.7 1.1-.9 1.8-.2.7-.3 1.5-.3 2.3s.1 1.6.3 2.3c.2.7.5 1.3.9 1.8.4.5.9.8 1.4 1 .5.2 1 .3 1.5.3s1-.1 1.5-.3c.5-.2 1-.5 1.4-1 .4-.5.7-1.1.9-1.8.2-.7.3-1.5.3-2.3s-.1-1.6-.3-2.3c-.2-.7-.5-1.3-.9-1.8-.4-.5-.9-.8-1.4-1-.5-.2-1-.3-1.5-.3zm.5 2.5c.3 0 .6.1.8.3.2.2.3.5.3.8v7.6c0 .3-.1.6-.3.8-.2.2-.5.3-.8.3s-.6-.1-.8-.3c-.2-.2-.3-.5-.3-.8v-7.6c0-.3.1-.6.3-.8.2-.2.5-.3.8-.3z"/></svg>
+            </div>
+            <h1 class="text-4xl font-extrabold mb-2">
+                <span class="bg-gradient-to-r from-gray-900 to-cyan-500 bg-clip-text text-transparent">TikTok Downloader</span>
+            </h1>
+            <p class="text-gray-600">Download video TikTok tanpa watermark</p>
+        </div>
+
+        <div class="space-y-4 mb-6">
+            <div class="relative">
+                <input type="url" id="ttUrl" placeholder="Masukkan URL TikTok..."
+                    class="w-full px-5 py-4 bg-white/70 border-2 border-gray-200 rounded-xl focus:border-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-900/20 transition-all text-gray-800 placeholder-gray-400"
+                    autocomplete="off">
+                <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101"/></svg>
+                </div>
+            </div>
+            <button onclick="downloadVideo()"
+                class="w-full gradient-btn text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-gray-500/30">
+                Download Video
+            </button>
+        </div>
+
+        <div id="result" class="space-y-4"></div>
+    </div>
+
+    <script>
+        async function downloadVideo() {
+            const url = document.getElementById('ttUrl').value.trim();
+            const resultDiv = document.getElementById('result');
+            const button = document.querySelector('button');
+
+            if (!url) {
+                resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">Masukkan URL TikTok terlebih dahulu</p></div>`;
+                return;
+            }
+
+            resultDiv.innerHTML = `<div class="text-center py-6"><div class="inline-block animate-spin rounded-full h-10 w-10 border-b-3 border-gray-900"></div><p class="text-gray-600 mt-3 font-medium">Memproses...</p></div>`;
+            button.disabled = true;
+            button.textContent = 'Memproses...';
+
+            try {
+                const encodedUrl = encodeURIComponent(url);
+                const apiUrl = `https://api.ryzumi.net/api/downloader/ttdl?url=${encodedUrl}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: { 'accept': 'application/json' }
+                });
+                const data = await response.json();
+
+                if (data.success && data.data && data.data.data) {
+                    const videoData = data.data.data;
+                    const { title, cover, play, wmplay, hdplay, music, author, play_count, digg_count, duration } = videoData;
+                    let html = '';
+
+                    if (cover || title) {
+                        html += `<div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-5 mb-4 border border-gray-200">`;
+                        if (cover) html += `<img src="${cover}" class="w-full rounded-lg mb-3 shadow-md">`;
+                        if (title) html += `<h3 class="font-bold text-gray-800 text-lg">${title}</h3>`;
+                        if (author) {
+                            html += `<div class="flex items-center gap-3 mt-3">
+                                <img src="${author.avatar}" class="w-10 h-10 rounded-full border-2 border-gray-300">
+                                <div>
+                                    <p class="font-bold text-gray-800">@${author.unique_id || author.nickname}</p>
+                                </div>
+                            </div>`;
+                        }
+                        if (play_count || digg_count) {
+                            html += `<div class="flex gap-4 mt-3 text-xs text-gray-500">
+                                ${play_count ? `<span>👁️ ${Number(play_count).toLocaleString()} views</span>` : ''}
+                                ${digg_count ? `<span>❤️ ${Number(digg_count).toLocaleString()} likes</span>` : ''}
+                                ${duration ? `<span>⏱️ ${duration}s</span>` : ''}
+                            </div>`;
+                        }
+                        html += `</div>`;
+                    }
+
+                    if (play) {
+                        html += `
+                            <a href="${play}" target="_blank" rel="noopener"
+                                class="success-btn text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-gray-500/30 text-center block">
+                                ⬇️ Download No Watermark (MP4)
+                            </a>
+                        `;
+                    }
+
+                    if (hdplay) {
+                        html += `
+                            <a href="${hdplay}" target="_blank" rel="noopener"
+                                class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-gray-500/30 text-center block">
+                                ⬇️ Download HD (MP4)
+                            </a>
+                        `;
+                    }
+
+                    if (wmplay) {
+                        html += `
+                            <a href="${wmplay}" target="_blank" rel="noopener"
+                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-6 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg text-center block">
+                                ⬇️ Download With Watermark (MP4)
+                            </a>
+                        `;
+                    }
+
+                    if (music) {
+                        html += `
+                            <a href="${music}" target="_blank" rel="noopener"
+                                class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-green-500/30 text-center block">
+                                🎵 Download Audio (MP3)
+                            </a>
+                        `;
+                    }
+
+                    resultDiv.innerHTML = html;
+                } else {
+                    const errorMsg = data.data?.msg || data.message || 'Gagal memproses URL';
+                    resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">${errorMsg}</p></div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">Terjadi kesalahan: ${error.message}</p></div>`;
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Download Video';
+            }
+        }
+
+        document.getElementById('ttUrl').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') downloadVideo();
+        });
+    </script>
+</body>
+</html>

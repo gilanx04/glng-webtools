@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="GD DL">
+<div class="glass rounded-3xl shadow-2xl p-8 max-w-2xl w-full border border-white/50">
+        <div class="text-center mb-8">
+            <a href="/" class="inline-flex items-center gap-2 text-green-600 hover:text-green-800 transition-colors font-medium mb-6">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                Kembali
+            </a>
+            <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M22.56 14.2c-.23-.68-.87-1.2-1.57-1.24-.52-.04-.99.33-1.2.85-.32 1.12-.1 2.36.56 3.29.38.52.96.84 1.6.84.18 0 .36-.03.53-.08.78-.24 1.23-1.04 1.07-1.75-.04-.22-.1-.43-.18-.64l-.81-.27zm-8.52 2.52c-.63.61-1.53.78-2.34.42l-.01-.01c-.42-.2-.75-.55-.92-.98-.33-.89-.17-1.95.43-2.64.63-.71 1.57-.93 2.4-.6l.01.01c.39.17.7.48.87.87.26.68.13 1.5-.25 2.06-.11.19-.24.35-.38.47l-.81-.27zm-2.22-8.37c.63-.61 1.53-.78 2.34-.42l.01.01c.42.2.75.55.92.98.33.89.17 1.95-.43 2.64-.63.71-1.57.93-2.4.6l-.01-.01c-.39-.17-.7-.48-.87-.87-.26-.68-.13-1.5.25-2.06.11-.19.24-.35.38-.47l.81.27zm-4.24 4.25c.61.63.78 1.53.42 2.34l-.01.01c-.2.42-.55.75-.98.92-.89.33-1.95.17-2.64-.43-.71-.63-.93-1.57-.6-2.4l.01-.01c.17-.39.48-.7.87-.87.68-.26 1.5-.13 2.06.25.19.11.35.24.47.38l.27-.81zm.51-5.47c.68-.23 1.24.13 1.46.44.23.32.23.73.02 1.12-.63 1.12-1.93 1.47-2.95 1.02-.55-.25-1.02-.7-1.25-1.25-.45-1.02-.1-2.32 1.02-2.95.39-.22.8-.22 1.12.02.31.23.48.64.58 1.09l.81.27zM12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 1.5c5.799 0 10.5 4.701 10.5 10.5S17.799 22.5 12 22.5 1.5 17.799 1.5 12 6.201 1.5 12 1.5z"/></svg>
+            </div>
+            <h1 class="text-4xl font-extrabold mb-2">
+                <span class="bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent">Google Drive Downloader</span>
+            </h1>
+            <p class="text-gray-600">Download file dari Google Drive</p>
+        </div>
+
+        <div class="space-y-4 mb-6">
+            <div class="relative">
+                <input type="url" id="gdUrl" placeholder="Masukkan URL Google Drive..."
+                    class="w-full px-5 py-4 bg-white/70 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none focus:ring-4 focus:ring-green-500/20 transition-all text-gray-800 placeholder-gray-400"
+                    autocomplete="off">
+                <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101"/></svg>
+                </div>
+            </div>
+            <button onclick="downloadFile()"
+                class="w-full gradient-btn text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-green-500/30">
+                Download File
+            </button>
+        </div>
+
+        <div id="result" class="space-y-4"></div>
+    </div>
+
+    <script>
+        async function downloadFile() {
+            const url = document.getElementById('gdUrl').value.trim();
+            const resultDiv = document.getElementById('result');
+            const button = document.querySelector('button');
+
+            if (!url) {
+                resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">Masukkan URL Google Drive terlebih dahulu</p></div>`;
+                return;
+            }
+
+            resultDiv.innerHTML = `<div class="text-center py-6"><div class="inline-block animate-spin rounded-full h-10 w-10 border-b-3 border-green-600"></div><p class="text-gray-600 mt-3 font-medium">Memproses...</p></div>`;
+            button.disabled = true;
+            button.textContent = 'Memproses...';
+
+            try {
+                const apiUrl = `https://api.ryzumi.net/api/downloader/gdrive?url=${encodeURIComponent(url)}`;
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.downloadUrl && data.fileName) {
+                    let html = '';
+
+                    if (data.fileName) {
+                        html += `<div class="bg-gradient-to-br from-gray-50 to-green-50 rounded-xl p-5 mb-4 border border-green-100">`;
+                        html += `<h3 class="font-bold text-gray-800 text-lg">${data.fileName}</h3>`;
+                        if (data.fileSize) html += `<p class="text-gray-600 text-sm mt-1">Size: ${data.fileSize}</p>`;
+                        if (data.mimetype) html += `<p class="text-gray-500 text-xs mt-1">Type: ${data.mimetype}</p>`;
+                        html += `</div>`;
+                    }
+
+                    html += `
+                        <a href="${data.downloadUrl}" target="_blank" rel="noopener"
+                            class="success-btn text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-blue-500/30 text-center block">
+                            Download ${data.fileName || 'File'}${data.fileSize ? ' (' + data.fileSize + ')' : ''}
+                        </a>
+                    `;
+
+                    resultDiv.innerHTML = html;
+                } else if (data.error || data.errors) {
+                    const errorMsg = data.error || data.errors || 'Gagal memproses URL';
+                    resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">${errorMsg}</p></div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-xl"><p class="text-yellow-700 font-medium">Tidak ada file yang ditemukan</p></div>`;
+                }
+            } catch (error) {
+                if (error.message.includes('404')) {
+                    resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">API endpoint tidak tersedia atau file tidak ditemukan. Pastikan file Google Drive sudah diatur ke "Anyone with the link can view".</p></div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">Terjadi kesalahan: ${error.message}</p></div>`;
+                }
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Download File';
+            }
+        }
+
+        document.getElementById('gdUrl').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') downloadFile();
+        });
+    </script>
+</BaseLayout>

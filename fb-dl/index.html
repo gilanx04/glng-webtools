@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Downloader - Web Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+
+        .mesh-bg {
+            background-image:
+                radial-gradient(at 20% 50%, rgba(24, 119, 242, 0.3) 0px, transparent 50%),
+                radial-gradient(at 80% 20%, rgba(66, 103, 178, 0.2) 0px, transparent 50%),
+                radial-gradient(at 40% 80%, rgba(118, 75, 162, 0.2) 0px, transparent 50%);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .gradient-btn {
+            background: linear-gradient(135deg, #1877F2, #0d5cb6);
+        }
+
+        .gradient-btn:hover {
+            background: linear-gradient(135deg, #0d5cb6, #1877F2);
+            transform: scale(1.02);
+        }
+
+        .success-btn {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+
+        .success-btn:hover {
+            background: linear-gradient(135deg, #16a34a, #22c55e);
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="min-h-screen mesh-bg flex items-center justify-center p-5">
+    <div class="glass rounded-3xl shadow-2xl p-8 max-w-2xl w-full border border-white/50">
+        <div class="text-center mb-8">
+            <a href="/" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors font-medium mb-6">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                Kembali
+            </a>
+            <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </div>
+            <h1 class="text-4xl font-extrabold mb-2">
+                <span class="bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">Facebook Downloader</span>
+            </h1>
+            <p class="text-gray-600">Download video Facebook dengan kualitas HD</p>
+        </div>
+
+        <div class="space-y-4 mb-6">
+            <div class="relative">
+                <input type="url" id="fbUrl" placeholder="Masukkan URL Facebook..."
+                    class="w-full px-5 py-4 bg-white/70 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-500/20 transition-all text-gray-800 placeholder-gray-400"
+                    autocomplete="off">
+                <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101"/></svg>
+                </div>
+            </div>
+            <button onclick="downloadVideo()"
+                class="w-full gradient-btn text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-blue-500/30">
+                Download Video
+            </button>
+        </div>
+
+        <div id="result" class="space-y-4"></div>
+    </div>
+
+    <script>
+        const qualityMap = {
+            'hd': '720p',
+            'sd': '360p',
+            'ld': '240p'
+        };
+
+        async function downloadVideo() {
+            const url = document.getElementById('fbUrl').value.trim();
+            const resultDiv = document.getElementById('result');
+            const button = document.querySelector('button');
+
+            if (!url) {
+                resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">Masukkan URL Facebook terlebih dahulu</p></div>`;
+                return;
+            }
+
+            resultDiv.innerHTML = `<div class="text-center py-6"><div class="inline-block animate-spin rounded-full h-10 w-10 border-b-3 border-blue-600"></div><p class="text-gray-600 mt-3 font-medium">Memproses...</p></div>`;
+            button.disabled = true;
+            button.textContent = 'Memproses...';
+
+            try {
+                const apiUrl = `https://api.ryzumi.net/api/downloader/facebook?url=${encodeURIComponent(url)}`;
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.success && data.result) {
+                    const { title, cover, media } = data.result;
+                    let html = '';
+
+                    if (cover || title) {
+                        html += `<div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl p-5 mb-4 border border-blue-100">`;
+                        if (cover) html += `<img src="${cover}" class="w-full rounded-lg mb-3 shadow-md">`;
+                        if (title) html += `<h3 class="font-bold text-gray-800 text-lg">${title}</h3>`;
+                        html += `</div>`;
+                    }
+
+                    if (media && media.videos && media.videos.length > 0) {
+                        media.videos.forEach((video, i) => {
+                            const qualityLabel = video.quality || 'unknown';
+                            const res = qualityMap[qualityLabel] || qualityLabel;
+                            const bitrateMatch = video.url.match(/bitrate=(\d+)/);
+                            const bitrate = bitrateMatch ? Math.round(parseInt(bitrateMatch[1])/1000) + 'k' : '';
+                            const label = media.videos.length > 1 ? `${res} #${i+1}` : res;
+
+                            html += `
+                                <a href="${video.url}" target="_blank" rel="noopener"
+                                    class="success-btn text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-green-500/30 text-center block">
+                                    Download ${label} (${video.extension || 'mp4'})${bitrate ? ' - ' + bitrate : ''}
+                                </a>
+                            `;
+                        });
+                    } else {
+                        html += `<div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-xl"><p class="text-yellow-700 font-medium">Tidak ada video yang ditemukan</p></div>`;
+                    }
+                    resultDiv.innerHTML = html;
+                } else {
+                    const errorMsg = data.errors || data.message || 'Gagal memproses URL';
+                    resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">${errorMsg}</p></div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">Terjadi kesalahan: ${error.message}</p></div>`;
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Download Video';
+            }
+        }
+
+        document.getElementById('fbUrl').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') downloadVideo();
+        });
+    </script>
+</body>
+</html>

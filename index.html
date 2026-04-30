@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .gradient-border {
+            position: relative;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 1rem;
+            padding: 2px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gradient-border:hover::before {
+            opacity: 1;
+        }
+
+        .icon-box {
+            background: linear-gradient(135deg, var(--gradient-from), var(--gradient-to));
+        }
+
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .mesh-bg {
+            background-image:
+                radial-gradient(at 20% 50%, rgba(102, 126, 234, 0.3) 0px, transparent 50%),
+                radial-gradient(at 80% 20%, rgba(246, 79, 89, 0.2) 0px, transparent 50%),
+                radial-gradient(at 40% 80%, rgba(118, 75, 162, 0.2) 0px, transparent 50%),
+                radial-gradient(at 60% 60%, rgba(240, 147, 251, 0.15) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="min-h-screen mesh-bg">
+    <div class="max-w-4xl mx-auto px-5 py-12">
+        <!-- Header -->
+        <div class="text-center mb-16 relative">
+            <div class="absolute inset-0 flex items-center justify-center opacity-5">
+                <div class="w-96 h-96 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur-3xl"></div>
+            </div>
+            <div class="relative">
+                <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm mb-6">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-sm font-medium text-gray-700">Online</span>
+                </div>
+                <h1 class="text-6xl font-extrabold mb-4">
+                    <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                        Web Tools
+                    </span>
+                </h1>
+                <p class="text-gray-600 text-lg font-medium">Kumpulan tools bermanfaat untuk berbagai kebutuhan</p>
+            </div>
+        </div>
+
+        <!-- Downloaders -->
+        <div class="mb-16">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="h-px flex-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                <h2 class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] px-4">Downloaders</h2>
+                <div class="h-px flex-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="/fb-dl/" class="group gradient-border glass rounded-2xl p-6 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300">
+                    <div class="flex items-start gap-4">
+                        <span class="flex-shrink-0 w-14 h-14 icon-box rounded-xl flex items-center justify-center font-bold text-white text-sm shadow-lg" style="--gradient-from: #1877F2; --gradient-to: #0d5cb6;">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </span>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-900 text-lg group-hover:text-blue-600 transition-colors">Facebook Downloader</h3>
+                            <p class="text-sm text-gray-500 mt-1">Download video Facebook dengan kualitas HD</p>
+                            <div class="flex items-center gap-2 mt-3">
+                                <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-md">HD Quality</span>
+                                <span class="text-xs font-semibold text-gray-600 bg-gray-100 px-2 py-1 rounded-md">Fast</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="/gd-dl/" class="group gradient-border glass rounded-2xl p-6 hover:shadow-2xl hover:shadow-green-500/10 hover:-translate-y-1 transition-all duration-300">
+                    <div class="flex items-start gap-4">
+                        <span class="flex-shrink-0 w-14 h-14 icon-box rounded-xl flex items-center justify-center font-bold text-white text-sm shadow-lg" style="--gradient-from: #34A853; --gradient-to: #0d904f;">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.56 14.2c-.23-.68-.87-1.2-1.57-1.24-.52-.04-.99.33-1.2.85-.32 1.12-.1 2.36.56 3.29.38.52.96.84 1.6.84.18 0 .36-.03.53-.08.78-.24 1.23-1.04 1.07-1.75-.04-.22-.1-.43-.18-.64l-.81-.27zm-8.52 2.52c-.63.61-1.53.78-2.34.42l-.01-.01c-.42-.2-.75-.55-.92-.98-.33-.89-.17-1.95.43-2.64.63-.71 1.57-.93 2.4-.6l.01.01c.39.17.7.48.87.87.26.68.13 1.5-.25 2.06-.11.19-.24.35-.38.47l-.81-.27zm-2.22-8.37c.63-.61 1.53-.78 2.34-.42l.01.01c.42.2.75.55.92.98.33.89.17 1.95-.43 2.64-.63.71-1.57.93-2.4.6l-.01-.01c-.39-.17-.7-.48-.87-.87-.26-.68-.13-1.5.25-2.06.11-.19.24-.35.38-.47l.81.27zm-4.24 4.25c.61.63.78 1.53.42 2.34l-.01.01c-.2.42-.55.75-.98.92-.89.33-1.95.17-2.64-.43-.71-.63-.93-1.57-.6-2.4l.01-.01c.17-.39.48-.7.87-.87.68-.26 1.5-.13 2.06.25.19.11.35.24.47.38l.27-.81zm.51-5.47c.68-.23 1.24.13 1.46.44.23.32.23.73.02 1.12-.63 1.12-1.93 1.47-2.95 1.02-.55-.25-1.02-.7-1.25-1.25-.45-1.02-.1-2.32 1.02-2.95.39-.22.8-.22 1.12.02.31.23.48.64.58 1.09l.81.27zM12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 1.5c5.799 0 10.5 4.701 10.5 10.5S17.799 22.5 12 22.5 1.5 17.799 1.5 12 6.201 1.5 12 1.5z"/></svg>
+                        </span>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-900 text-lg group-hover:text-green-600 transition-colors">Google Drive Downloader</h3>
+                            <p class="text-sm text-gray-500 mt-1">Download file dari Google Drive</p>
+                            <div class="flex items-center gap-2 mt-3">
+                                <span class="text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-md">Drive API</span>
+                                <span class="text-xs font-semibold text-gray-600 bg-gray-100 px-2 py-1 rounded-md">Direct</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="/ig-dl/" class="group gradient-border glass rounded-2xl p-6 hover:shadow-2xl hover:shadow-pink-500/10 hover:-translate-y-1 transition-all duration-300">
+                    <div class="flex items-start gap-4">
+                        <span class="flex-shrink-0 w-14 h-14 icon-box rounded-xl flex items-center justify-center font-bold text-white text-sm shadow-lg" style="--gradient-from: #E4405F; --gradient-to: #c13584;">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 100 12.324 6.162 6.162 0 100-12.324zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405a1.441 1.441 0 100 2.882 1.441 1.441 0 100-2.882z"/></svg>
+                        </span>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-900 text-lg group-hover:text-pink-600 transition-colors">Instagram Downloader</h3>
+                            <p class="text-sm text-gray-500 mt-1">Download foto & video Instagram</p>
+                            <div class="flex items-center gap-2 mt-3">
+                                <span class="text-xs font-semibold text-pink-600 bg-pink-50 px-2 py-1 rounded-md">Photos</span>
+                                <span class="text-xs font-semibold text-pink-600 bg-pink-50 px-2 py-1 rounded-md">Videos</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="/tt-dl/" class="group gradient-border glass rounded-2xl p-6 hover:shadow-2xl hover:shadow-gray-500/10 hover:-translate-y-1 transition-all duration-300">
+                    <div class="flex items-start gap-4">
+                        <span class="flex-shrink-0 w-14 h-14 icon-box rounded-xl flex items-center justify-center font-bold text-white text-sm shadow-lg" style="--gradient-from: #010101; --gradient-to: #25F4EE;">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.53.02C13.84 0 15.14.01 16.44.06c1.76.07 3.37.38 4.89 1.02 1.52.63 2.83 1.59 3.88 3.02 1.05 1.43 1.7 3.13 1.97 5.07.27 1.94.3 4.14.08 6.17-.23 2.03-.85 3.73-1.83 5.05-1.02 1.37-2.35 2.35-3.9 2.96-1.55.61-3.28.93-5.06 1.07-1.78.14-4.02.1-6.22-.08-2.2-.17-3.89-.49-5.4-1.13-1.52-.63-2.83-1.59-3.88-3.02C.53 17.22-.12 15.52.15 13.58c.27-1.94.3-4.14.08-6.17-.23-2.03.39-3.73 1.37-5.05C2.62 1.98 3.95 1 5.5.4 7.05-.2 8.78-.52 10.56-.66 11.35-.74 11.86-.77 12.53-.76v.02zM8.01 5.4c-.3 0-.6.12-.8.32-.2.2-.3.5-.3.8v12.16c0 .3.1.6.3.8.2.2.5.3.8.3s.6-.1.8-.3c.2-.2.3-.5.3-.8V6.52c0-.3-.1-.6-.3-.8-.2-.2-.5-.32-.8-.32zm7.98 3.97c-.5 0-1 .1-1.5.3-.5.2-1 .5-1.4 1-.4.5-.7 1.1-.9 1.8-.2.7-.3 1.5-.3 2.3s.1 1.6.3 2.3c.2.7.5 1.3.9 1.8.4.5.9.8 1.4 1 .5.2 1 .3 1.5.3s1-.1 1.5-.3c.5-.2 1-.5 1.4-1 .4-.5.7-1.1.9-1.8.2-.7.3-1.5.3-2.3s-.1-1.6-.3-2.3c-.2-.7-.5-1.3-.9-1.8-.4-.5-.9-.8-1.4-1-.5-.2-1-.3-1.5-.3zm.5 2.5c.3 0 .6.1.8.3.2.2.3.5.3.8v7.6c0 .3-.1.6-.3.8-.2.2-.5.3-.8.3s-.6-.1-.8-.3c-.2-.2-.3-.5-.3-.8v-7.6c0-.3.1-.6.3-.8.2-.2.5-.3.8-.3z"/></svg>
+                        </span>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-900 text-lg group-hover:text-gray-900 transition-colors">TikTok Downloader</h3>
+                            <p class="text-sm text-gray-500 mt-1">Download video TikTok tanpa watermark</p>
+                            <div class="flex items-center gap-2 mt-3">
+                                <span class="text-xs font-semibold text-gray-900 bg-gray-100 px-2 py-1 rounded-md">No WM</span>
+                                <span class="text-xs font-semibold text-gray-900 bg-gray-100 px-2 py-1 rounded-md">HD</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Search -->
+        <div class="mb-16">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="h-px flex-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                <h2 class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] px-4">Search</h2>
+                <div class="h-px flex-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="/search-pddikti/" class="group gradient-border glass rounded-2xl p-6 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 transition-all duration-300">
+                    <div class="flex items-start gap-4">
+                        <span class="flex-shrink-0 w-14 h-14 icon-box rounded-xl flex items-center justify-center font-bold text-white text-sm shadow-lg" style="--gradient-from: #1e40af; --gradient-to: #3b82f6;">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        </span>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-900 text-lg group-hover:text-blue-900 transition-colors">PDDIKTI Search</h3>
+                            <p class="text-sm text-gray-500 mt-1">Pencarian data mahasiswa (NIM/Nama)</p>
+                            <div class="flex items-center gap-2 mt-3">
+                                <span class="text-xs font-semibold text-blue-900 bg-blue-50 px-2 py-1 rounded-md">NIM</span>
+                                <span class="text-xs font-semibold text-blue-900 bg-blue-50 px-2 py-1 rounded-md">Name</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="/search-wpmoe/" class="group gradient-border glass rounded-2xl p-6 hover:shadow-2xl hover:shadow-purple-500/10 hover:-translate-y-1 transition-all duration-300">
+                    <div class="flex items-start gap-4">
+                        <span class="flex-shrink-0 w-14 h-14 icon-box rounded-xl flex items-center justify-center font-bold text-white text-sm shadow-lg" style="--gradient-from: #7c3aed; --gradient-to: #a855f7;">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        </span>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-900 text-lg group-hover:text-purple-700 transition-colors">WP MOE Search</h3>
+                            <p class="text-sm text-gray-500 mt-1">Pencarian live wallpaper anime</p>
+                            <div class="flex items-center gap-2 mt-3">
+                                <span class="text-xs font-semibold text-purple-700 bg-purple-50 px-2 py-1 rounded-md">Anime</span>
+                                <span class="text-xs font-semibold text-purple-700 bg-purple-50 px-2 py-1 rounded-md">Live</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Image -->
+        <div class="mb-16">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="h-px flex-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                <h2 class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] px-4">Image</h2>
+                <div class="h-px flex-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="/image-calendar/" class="group gradient-border glass rounded-2xl p-6 hover:shadow-2xl hover:shadow-teal-500/10 hover:-translate-y-1 transition-all duration-300">
+                    <div class="flex items-start gap-4">
+                        <span class="flex-shrink-0 w-14 h-14 icon-box rounded-xl flex items-center justify-center font-bold text-white text-sm shadow-lg" style="--gradient-from: #0d9488; --gradient-to: #14b8a6;">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        </span>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-900 text-lg group-hover:text-teal-600 transition-colors">Calendar Image</h3>
+                            <p class="text-sm text-gray-500 mt-1">Generate gambar kalender bulan tertentu</p>
+                            <div class="flex items-center gap-2 mt-3">
+                                <span class="text-xs font-semibold text-teal-600 bg-teal-50 px-2 py-1 rounded-md">Monthly</span>
+                                <span class="text-xs font-semibold text-teal-600 bg-teal-50 px-2 py-1 rounded-md">Custom</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="/image-iqc/" class="group gradient-border glass rounded-2xl p-6 hover:shadow-2xl hover:shadow-gray-500/10 hover:-translate-y-1 transition-all duration-300">
+                    <div class="flex items-start gap-4">
+                        <span class="flex-shrink-0 w-14 h-14 icon-box rounded-xl flex items-center justify-center font-bold text-white text-sm shadow-lg" style="--gradient-from: #374151; --gradient-to: #6b7280;">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                        </span>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-900 text-lg group-hover:text-gray-900 transition-colors">iPhone Quotly Chat</h3>
+                            <p class="text-sm text-gray-500 mt-1">Generate screenshot iPhone chat</p>
+                            <div class="flex items-center gap-2 mt-3">
+                                <span class="text-xs font-semibold text-gray-900 bg-gray-100 px-2 py-1 rounded-md">iOS</span>
+                                <span class="text-xs font-semibold text-gray-900 bg-gray-100 px-2 py-1 rounded-md">Mockup</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center pt-8 border-t border-gray-200/50">
+            <p class="text-sm text-gray-400 font-medium">© 2026 Web Tools</p>
+            <p class="text-xs text-gray-300 mt-1">Powered by <span class="text-orange-500 font-semibold">Cloudflare</span></p>
+        </div>
+    </div>
+</body>
+</html>

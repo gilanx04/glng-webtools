@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDDIKTI Search - Web Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+
+        .mesh-bg {
+            background-image:
+                radial-gradient(at 20% 50%, rgba(30, 64, 175, 0.3) 0px, transparent 50%),
+                radial-gradient(at 80% 20%, rgba(59, 130, 246, 0.2) 0px, transparent 50%),
+                radial-gradient(at 40% 80%, rgba(96, 165, 250, 0.2) 0px, transparent 50%);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .gradient-btn {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+        }
+
+        .gradient-btn:hover {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="min-h-screen mesh-bg flex items-center justify-center p-5">
+    <div class="glass rounded-3xl shadow-2xl p-8 max-w-4xl w-full border border-white/50">
+        <div class="text-center mb-8">
+            <a href="/" class="inline-flex items-center gap-2 text-blue-800 hover:text-blue-950 transition-colors font-medium mb-6">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                Kembali
+            </a>
+            <div class="w-20 h-20 bg-gradient-to-br from-blue-800 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+            <h1 class="text-4xl font-extrabold mb-2">
+                <span class="bg-gradient-to-r from-blue-800 to-blue-500 bg-clip-text text-transparent">PDDIKTI Search</span>
+            </h1>
+            <p class="text-gray-600">Pencarian data mahasiswa (NIM/Nama Lengkap)</p>
+        </div>
+
+        <div class="space-y-4 mb-6">
+            <div class="relative">
+                <input type="text" id="query" placeholder="Masukkan NIM atau Nama Lengkap..."
+                    class="w-full px-5 py-4 bg-white/70 border-2 border-gray-200 rounded-xl focus:border-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-800/20 transition-all text-gray-800 placeholder-gray-400"
+                    autocomplete="off">
+                <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+            </div>
+            <button onclick="searchMahasiswa()"
+                class="w-full gradient-btn text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-blue-800/30">
+                Cari Mahasiswa
+            </button>
+        </div>
+
+        <div id="result" class="space-y-4"></div>
+    </div>
+
+    <script>
+        async function searchMahasiswa() {
+            const query = document.getElementById('query').value.trim();
+            const resultDiv = document.getElementById('result');
+            const button = document.querySelector('button');
+
+            if (!query) {
+                resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">Masukkan NIM atau Nama terlebih dahulu</p></div>`;
+                return;
+            }
+
+            resultDiv.innerHTML = `<div class="text-center py-6"><div class="inline-block animate-spin rounded-full h-10 w-10 border-b-3 border-blue-800"></div><p class="text-gray-600 mt-3 font-medium">Mencari...</p></div>`;
+            button.disabled = true;
+            button.textContent = 'Mencari...';
+
+            try {
+                const encodedQuery = encodeURIComponent(query);
+                const apiUrl = `https://api.ryzumi.net/api/search/mahasiswa?query=${encodedQuery}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: { 'accept': 'application/json' }
+                });
+                const data = await response.json();
+
+                if (Array.isArray(data) && data.length > 0) {
+                    let html = `<div class="mb-4"><p class="text-gray-600 text-sm font-medium">Ditemukan ${data.length} hasil:</p></div>`;
+
+                    data.forEach((mhs, index) => {
+                        html += `
+                            <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl p-5 border border-blue-100 hover:border-blue-300 hover:shadow-lg transition-all">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <h3 class="font-bold text-gray-800 text-lg mb-2">${mhs.nama || '-'}</h3>
+                                        <div class="space-y-1 text-sm text-gray-600">
+                                            <p><span class="font-semibold text-blue-800">NIM:</span> ${mhs.nim || '-'}</p>
+                                            <p><span class="font-semibold text-blue-800">Perguruan Tinggi:</span> ${mhs.nama_pt || '-'}</p>
+                                            <p><span class="font-semibold text-blue-800">Program Studi:</span> ${mhs.nama_prodi || '-'}</p>
+                                        </div>
+                                    </div>
+                                    <span class="flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-800 rounded-full flex items-center justify-center font-bold text-sm">${index + 1}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    resultDiv.innerHTML = html;
+                } else if (Array.isArray(data) && data.length === 0) {
+                    resultDiv.innerHTML = `<div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-xl"><p class="text-yellow-700 font-medium">Tidak ada data yang ditemukan</p></div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">Format response tidak sesuai</p></div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl"><p class="text-red-700 font-medium">Terjadi kesalahan: ${error.message}</p></div>`;
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Cari Mahasiswa';
+            }
+        }
+
+        document.getElementById('query').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') searchMahasiswa();
+        });
+    </script>
+</body>
+</html>
