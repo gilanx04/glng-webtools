@@ -29,7 +29,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <div id="result" class="space-y-4"></div>
     </div>
 
-    <script>
+    <script is:inline>
         async function generateImage() {
             const text = document.getElementById('text').value.trim();
             const resultDiv = document.getElementById('result');
